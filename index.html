@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suruchi & Prajjwal's Wedding</title>
+    <style>
+        /* --- Google Fonts --- */
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500&family=Great+Vibes&display=swap');
+
+        /* --- Global Styles & Variables --- */
+        :root {
+    /* UPDATED: Changed from Deep Red to Royal Blue */
+    --primary-color: #0A244D;
+    --secondary-color: #D4AF37; /* Gold */
+    --text-color: #333;
+    --bg-color: #FFF8F0; /* Creamy White */
+    --font-headings: 'Playfair Display', serif;
+    --font-body: 'Poppins', sans-serif;
+    --font-script: 'Great Vibes', cursive;
+}
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        /* --- Reusable Container --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* --- Header & Navigation --- */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            background-color: rgba(255, 248, 240, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            margin: 0 1.5rem;
+            padding-bottom: 5px;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary-color);
+            transition: width 0.3s ease-in-out;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+
+        /* --- Hero Section - UPDATED FOR VIDEO --- */
+        #hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #fff;
+            overflow: hidden; /* Important for video */
+        }
+
+        #hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    /* This is the magic property */
+    object-fit: cover;
+}
+
+        .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* The last value (alpha) is now 0.3 instead of 0.5 */
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 2;
+}
+
+        #hero .intro-text {
+            position: relative; /* Keeps text on top of overlay */
+            z-index: 3;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1.5s ease-out 0.3s, transform 1s ease-out 0.3s;
+            transition-delay: 0.3s;
+        }
+
+        #hero .intro-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #hero .invitation-text {
+            font-family: var(--font-script);
+            font-size: 3rem;
+            color: #fff;
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+
+        #hero h1 {
+            font-family: var(--font-headings);
+            font-size: 5rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+
+        #hero .date {
+    margin-top: 2rem;
+    font-size: 1.2rem;
+    /* --- New Styles --- */
+    background-color: transparent;
+    border: 2px solid var(--secondary-color);
+    color: var(--secondary-color);
+    /* --- End New Styles --- */
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+        /* --- General Section Styling --- */
+        .section {
+            background-color: var(--bg-color); /* Added this to ensure it covers the main body background pattern */
+            position: relative; /* Ensures it sits above the body background pattern */
+            z-index: 5; /* Keeps it above the body pattern */
+            text-align: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        body > .section { /* Add a subtle pattern behind content sections */
+             background-image: radial-gradient(circle, rgba(212, 175, 55, 0.1) 1px, transparent 1px);
+             background-size: 20px 20px;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-family: var(--font-headings);
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 60%;
+            height: 3px;
+            background: var(--secondary-color);
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section p {
+            max-width: 700px;
+            margin: 1.5rem auto 0 auto;
+            line-height: 1.8;
+        }
+
+        /* --- Events Section --- */
+        #events .event-grid {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+            gap: 2rem;
+        }
+
+        .event-card {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 300px;
+            border-top: 5px solid var(--primary-color);
+        }
+
+        .event-card h3 {
+            font-family: var(--font-headings);
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        .event-card .event-date {
+            font-weight: 500;
+            color: var(--secondary-color);
+            margin: 0.5rem 0;
+        }
+
+        .event-card .event-location {
+            font-style: italic;
+        }
+
+        /* --- Gallery Section --- */
+        #gallery .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease-in-out;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            position: relative; /* Add this */
+            z-index: 5; /* Add this */
+        }
+
+        footer p {
+            font-size: 1.2rem;
+            font-family: var(--font-headings);
+        }
+
+        footer span {
+            color: var(--secondary-color);
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            #hero .invitation-text {
+                font-size: 3rem;
+            }
+            #hero h1 {
+                font-size: 5rem;
+            }
+            nav {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                justify-content: center;
+            }
+            nav a {
+                margin: 0 0.8rem;
+            }
+            .section-title {
+                font-size: 2.5rem;
+            }
+            #hero .date {
+    font-size: 2rem;       /* Make the font smaller */
+    padding: 0.4rem 1.2rem;  /* Reduce the button's padding */
+    margin-top: 3rem;    /* Reduce the space above the button */
+}
+        }
+
+         /* 4. Ensure Event Cards Stack Neatly */
+    .event-card {
+        width: 90%;
+        max-width: 350px;
+    }
+
+
+
+    </style>
+</head>
+<body>
+
+<!--    <header>-->
+<!--        <nav>-->
+<!--            <a href="#hero">Home</a>-->
+<!--            <a href="#our-story">Our Story</a>-->
+<!--            <a href="#events">Events</a>-->
+<!--            <a href="#gallery">Gallery</a>-->
+<!--        </nav>-->
+<!--    </header>-->
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <!-- The video -->
+        <video autoplay muted loop id="hero-video">
+            <!-- Make sure 'video.mp4' is in the same folder as this HTML file -->
+            <source src="video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <!-- The dark overlay -->
+        <div class="hero-overlay"></div>
+
+        <!-- The text content -->
+        <div class="intro-text">
+            <p class="invitation-text">You're invited to celebrate the wedding of</p>
+            <h1>Suruchi & Prajjwal</h1>
+            <p class="date">September 24, 2025</p>
+        </div>
+    </section>
+
+    <!-- Our Story Section -->
+<!--    <section id="our-story" class="section">-->
+<!--        <div class="container">-->
+<!--            <h2 class="section-title">Our Story</h2>-->
+<!--            <p>-->
+<!--                From stolen glances across a crowded room to a promise of a lifetime together, our journey has been nothing short of a fairytale. We met through mutual friends, bonded over our shared love for spicy food and old movies, and the rest is history. We are so excited to start our next chapter and couldn't be happier to share the beginning of our forever with you!-->
+<!--            </p>-->
+<!--        </div>-->
+<!--    </section>-->
+
+    <!-- Events Section -->
+    <section id="events" class="section">
+        <div class="container">
+            <h2 class="section-title">Wedding Events</h2>
+            <div class="event-grid">
+                <div class="event-card">
+                    <h3>Engagement Ceremony</h3>
+                    <p class="event-date">September 21, 2025 | 6:00 PM</p>
+                    <p class="event-location">Kathmandu</p>
+                </div>
+                <div class="event-card">
+                    <h3>Wedding Ceremony</h3>
+                    <p class="event-date">September 24, 2025 | 9:00 AM</p>
+                    <p class="event-location">Kathmandu</p>
+                </div>
+<!--                <div class="event-card">-->
+<!--                    <h3>Reception</h3>-->
+<!--                    <p class="event-date">December 15, 2025 | 7:00 PM</p>-->
+<!--                    <p class="event-location">Umaid Bhawan Palace, Jodhpur</p>-->
+<!--                </div>-->
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+<!--    <section id="gallery" class="section">-->
+<!--        <div class="container">-->
+<!--            <h2 class="section-title">Gallery</h2>-->
+<!--             <div class="gallery-grid">-->
+<!--                <div class="gallery-item">-->
+<!--                    <img src="https://images.unsplash.com/photo-1611930022078-2c299f8d3c4a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80" alt="Couple smiling">-->
+<!--                </div>-->
+<!--                 <div class="gallery-item">-->
+<!--                    <img src="https://images.unsplash.com/photo-1628392159519-7589c38d41a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80" alt="Couple in traditional attire">-->
+<!--                </div>-->
+<!--                 <div class="gallery-item">-->
+<!--                    <img src="https://images.unsplash.com/photo-1597861405922-387c12431b9a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80" alt="Close up of couple's hands">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+
+    <!-- Footer -->
+    <footer>
+        <p>With love, <span>Suruchi & Prajjwal</span></p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // --- Hero Text Animation ---
+            const heroText = document.querySelector('#hero .intro-text');
+            setTimeout(() => {
+                heroText.classList.add('visible');
+            }, 200);
+
+            // --- Scroll-triggered Fade-in Animation for Sections ---
+            const sections = document.querySelectorAll('.section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+
+</body>
+</html>
